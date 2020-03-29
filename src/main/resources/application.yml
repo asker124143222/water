@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+custom:
+  redisURL: 192.168.1.31
+  redis: true
+  userInfo: true
+logging:
+  file:
+    # 一旦日志文件大于10MB，这个日志文件就会被加上日期归档，原文清空重新开始记录日志
+    max-size: 10MB
+    name: /spring_water/logs/app.water.log
+spring:
+  mvc:
+    date-format: yyyy-MM-dd
