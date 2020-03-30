@@ -10,6 +10,30 @@ logging:
     # 一旦日志文件大于10MB，这个日志文件就会被加上日期归档，原文清空重新开始记录日志
     max-size: 10MB
     name: /spring_water/logs/app.water.log
+
 spring:
   mvc:
     date-format: yyyy-MM-dd
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/busdata
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    # 日志框架log4j被排除了
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
