@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @SpringBootTest
 class WaterApplicationTests {
@@ -18,10 +21,16 @@ class WaterApplicationTests {
     @Autowired
     CustomParams customParams;
 
+    @Autowired
+    DataSource dataSource;
+
     @Test
-    void contextLoads() {
+    void contextLoads() throws SQLException {
         System.out.println(king);
         System.out.println(customParams);
+        Connection connection = dataSource.getConnection();
+        System.out.println(connection);
+        connection.close();
 
     }
 
