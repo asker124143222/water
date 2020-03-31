@@ -36,3 +36,7 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+mybatis:
+  #xml映射版才需要配置，注解版本不需要
+  mapper-locations: classpath:mapper/*.xml #指定sql映射文件的位置

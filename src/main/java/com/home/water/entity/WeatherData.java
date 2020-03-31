@@ -8,16 +8,18 @@ import java.io.Serializable;
  * (WeatherData)实体类
  *
  * @author xu.dm
- * @since 2020-03-30 21:53:07
+ * @since 2020-03-31 12:26:19
  */
 @Data
 public class WeatherData implements Serializable {
-    private static final long serialVersionUID = -13746580675329174L;
+    private static final long serialVersionUID = -34431012340770708L;
+    
+    private Long id;
     
     private Integer weatherYear;
     
-    private Integer temperature;
-    
-    private Integer id;
+    private Integer avgValue;
+
+    private Integer userid;
 
 }

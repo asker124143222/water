@@ -2,6 +2,7 @@ package com.home.water.service.impl;
 
 import com.home.water.dao.UserDao;
 import com.home.water.entity.User;
+import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -41,11 +42,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int update(User user) {
-        return 0;
+        return userDao.update(user);
     }
 
     @Override
     public int delete(Integer id) {
-        return 0;
+        return userDao.delete(id);
+    }
+
+    @Override
+    public List<UserWeather> getAllUserAndWeather() {
+        return userDao.getAllUserAndWeather();
+    }
+
+    @Override
+    public List<UserWeather> getUserAndWeatherByID(Integer id) {
+        return userDao.getUserAndWeatherByID(id);
     }
 }

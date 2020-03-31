@@ -2,11 +2,11 @@ package com.home.water.controller;
 
 
 import com.home.water.entity.User;
+import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -64,7 +64,7 @@ public class UserController {
      */
     @PostMapping
     public User insert(@RequestBody User user) {
-        if(userService.insert(user)>0)
+        if (userService.insert(user) > 0)
             return user;
         else return null;
     }
@@ -77,7 +77,9 @@ public class UserController {
      */
     @PutMapping
     public User update(@RequestBody User user) {
-        return null;
+        if (userService.update(user) > 0)
+            return user;
+        else return null;
     }
 
     /**
@@ -87,7 +89,21 @@ public class UserController {
      * @return 删除结果
      */
     @DeleteMapping
-    public User delete(@RequestParam("idList") List<Integer> idList) {
-        return null;
+    public int delete(@RequestParam("idList") List<Integer> idList) {
+        int count = 0;
+        for (int i : idList) {
+            count += userService.delete(i);
+        }
+        return count;
+    }
+
+    @GetMapping("/AllUserWeather")
+    public List<UserWeather> getAllUserAndWeather() {
+        return userService.getAllUserAndWeather();
+    }
+
+    @GetMapping("/AllUserWeather/{id}")
+    public List<UserWeather> getAllUserAndWeather(@PathVariable Integer id) {
+        return userService.getUserAndWeatherByID(id);
     }
 }

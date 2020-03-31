@@ -1,6 +1,7 @@
 package com.home.water.service;
 
 import com.home.water.entity.User;
+import com.home.water.model.UserWeather;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface UserService {
     int update(User user);
 
     int delete(Integer id);
+
+    List<UserWeather> getAllUserAndWeather();
+
+    List<UserWeather> getUserAndWeatherByID(Integer id);
 }

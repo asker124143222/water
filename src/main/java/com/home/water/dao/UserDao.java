@@ -1,9 +1,9 @@
 package com.home.water.dao;
 
 import com.home.water.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import com.home.water.model.UserWeather;
+import org.apache.ibatis.annotations.*;
+import org.springframework.jdbc.core.SqlProvider;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Generated;
@@ -33,7 +33,17 @@ public interface UserDao {
             "VALUES (#{username}, #{name}, #{password}, #{salt}, 1,sysdate())")
     int insert(User user);
 
+    @Update("update `user` set name=#{name},username=#{username} where userid=#{userid}")
     int update(User user);
 
+    @Delete("delete from user where userid=#{id}")
     int delete(Integer id);
+
+    @Select("select u.`userId`,u.`userName`,u.name,wd.weather_year,wd.avg_value " +
+            "from `user` u inner join weather_data wd  on u.`userId`= wd.userid; ")
+    List<UserWeather> getAllUserAndWeather();
+
+    @Select("select u.`userId`,u.`userName`,u.name,wd.weather_year,wd.avg_value " +
+            "from `user` u inner join weather_data wd on u.`userId`= wd.userid where u.userid=#{id} ")
+    List<UserWeather> getUserAndWeatherByID(Integer id);
 }
