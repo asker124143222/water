@@ -35,7 +35,7 @@ public class HomeController {
         return king;
     }
 
-    @RequestMapping("/config")
+    @RequestMapping("/userInfo")
     public Object getConfigInfo() {
         if(customParams.isUserInfo()){
             UserInfo obj = (UserInfo)applicationContext.getBean("userInfo");
