@@ -4,6 +4,8 @@ package com.home.water.controller;
 import com.home.water.entity.User;
 import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("user")
 public class UserController {
+    Logger logger = LoggerFactory.getLogger(getClass());
     /**
      * 服务对象
      */
@@ -90,6 +93,7 @@ public class UserController {
      */
     @DeleteMapping
     public int delete(@RequestParam("idList") List<Integer> idList) {
+        logger.info("delete user data："+idList.toString());
         int count = 0;
         for (int i : idList) {
             count += userService.delete(i);

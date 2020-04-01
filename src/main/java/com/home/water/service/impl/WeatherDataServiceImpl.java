@@ -2,6 +2,7 @@ package com.home.water.service.impl;
 
 import com.home.water.entity.WeatherData;
 import com.home.water.dao.WeatherDataDao;
+import com.home.water.model.UserWeather;
 import com.home.water.model.WeatherUser;
 import com.home.water.service.WeatherDataService;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class WeatherDataServiceImpl implements WeatherDataService {
     @Override
     public List<WeatherUser> getWeatherAndUserByID(Long id) {
         return weatherDataDao.getWeatherAndUserByID(id);
+    }
+
+    @Override
+    public List<WeatherUser> getWeatherAndUserByUserName(String userName) {
+        return weatherDataDao.getWeatherAndUserByUserName(userName);
     }
 
     /**

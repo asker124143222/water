@@ -1,6 +1,7 @@
 package com.home.water.service;
 
 import com.home.water.entity.WeatherData;
+import com.home.water.model.UserWeather;
 import com.home.water.model.WeatherUser;
 
 import java.util.List;
@@ -59,5 +60,7 @@ public interface WeatherDataService {
     List<WeatherUser> getWeatherAndUser();
 
     List<WeatherUser> getWeatherAndUserByID(Long id);
+
+    List<WeatherUser> getWeatherAndUserByUserName(String userName);
 
 }

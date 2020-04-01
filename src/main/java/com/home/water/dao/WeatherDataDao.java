@@ -3,6 +3,8 @@ package com.home.water.dao;
 import com.home.water.entity.WeatherData;
 import com.home.water.model.WeatherUser;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
 import java.util.List;
 
 /**
@@ -66,4 +68,10 @@ public interface WeatherDataDao {
     List<WeatherUser> getWeatherAndUser();
 
     List<WeatherUser> getWeatherAndUserByID(Long id);
+
+    @Select("select u.`userId`,u.`userName`,wd.weather_year,wd.avg_value " +
+            "from `user` u inner join weather_data wd  " +
+            "on u.`userId`= wd.userid " +
+            "where u.`userName`=#{userName};")
+    List<WeatherUser> getWeatherAndUserByUserName(String userName);
 }

@@ -28,15 +28,15 @@ public class DruidConfig {
     //  将yml里的配置参数注入DruidDataSource
     @ConfigurationProperties(prefix = "spring.datasource")
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         return new DruidDataSource();
     }
 
     //配置Druid监控
     //1、配置管理后台的Servlet
     @Bean
-    public ServletRegistrationBean<Servlet> statViewServlet(){
-        ServletRegistrationBean<Servlet> bean = new ServletRegistrationBean<>(new StatViewServlet(),"/druid/*");
+    public ServletRegistrationBean<Servlet> statViewServlet() {
+        ServletRegistrationBean<Servlet> bean = new ServletRegistrationBean<>(new StatViewServlet(), "/druid/*");
         Map<String, String> initParams = new HashMap<>();
 
         initParams.put("loginUsername", "admin");

@@ -74,4 +74,9 @@ public class WeatherDataController {
     public List<WeatherUser> getWeatherAndUserByID(@PathVariable Long id){
         return weatherDataService.getWeatherAndUserByID(id);
     }
+
+    @GetMapping("/weatherByName/{userName}")
+    public List<WeatherUser> getWeatherAndUserByUserName(@PathVariable String userName){
+        return weatherDataService.getWeatherAndUserByUserName(userName);
+    }
 }
