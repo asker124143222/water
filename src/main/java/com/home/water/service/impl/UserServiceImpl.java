@@ -1,7 +1,10 @@
 package com.home.water.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.home.water.dao.UserDao;
 import com.home.water.entity.User;
+import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
 import net.sf.ehcache.CacheManager;
@@ -29,9 +32,22 @@ public class UserServiceImpl implements UserService {
 
     @Cacheable(key = "'all_user'")
     @Override
-    public List<User> getAll() {
+    public List<UserVO> getAll() {
         return userDao.getAll();
     }
+
+    @Override
+    public List<UserVO> queryAllByLimit(int offset, int limit) {
+        return userDao.queryAllByLimit(offset,limit);
+    }
+
+    @Override
+    public Page<UserVO> queryByPage(int pageNum, int pageSize) {
+//        PageHelper.startPage(pageNum,pageSize);
+//        Page<UserVO> pages = (Page<UserVO>)userDao.getAll();
+        return null;
+    }
+
 
     @Cacheable(key = "'user_' + #id")
     @Override

@@ -1,6 +1,8 @@
 package com.home.water.dao;
 
 import com.home.water.entity.User;
+import com.home.water.entity.WeatherData;
+import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
 import org.apache.ibatis.annotations.*;
 import org.springframework.jdbc.core.SqlProvider;
@@ -18,8 +20,40 @@ import java.util.List;
 @Repository
 //@Mapper
 public interface UserDao {
-    @Select("select * from user order by userid desc")
-    List<User> getAll();
+    @Select("SELECT `user`.`userId`,\n" +
+            "    `user`.`createTime`,\n" +
+            "    `user`.`email`,\n" +
+            "    `user`.`expiredDate`,\n" +
+            "    `user`.`name`,  \n" +
+            "    CASE `user`.`state`\n" +
+            "    WHEN 0 THEN '未认证'\n" +
+            "    WHEN '1' THEN '正常'\n" +
+            "    ELSE '用户锁定'  END as state,    \n" +
+            "    `user`.`tel`,\n" +
+            "    `user`.`userName`\n" +
+            "FROM `busdata`.`user` order by userid desc")
+    List<UserVO> getAll();
+
+    /**
+     * 查询指定行数据
+     *
+     * @param offset 查询起始位置
+     * @param limit 查询条数
+     * @return 对象列表
+     */
+    @Select("SELECT `user`.`userId`,\n" +
+            "    `user`.`createTime`,\n" +
+            "    `user`.`email`,\n" +
+            "    `user`.`expiredDate`,\n" +
+            "    `user`.`name`,  \n" +
+            "    CASE `user`.`state`\n" +
+            "    WHEN 0 THEN '未认证'\n" +
+            "    WHEN '1' THEN '正常'\n" +
+            "    ELSE '用户锁定'  END as state,    \n" +
+            "    `user`.`tel`,\n" +
+            "    `user`.`userName`\n" +
+            " from `busdata`.`user` limit #{offset}, #{limit}")
+    List<UserVO> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
     @Select("select * from user where userid=#{id}")
     User getOne(Integer id);

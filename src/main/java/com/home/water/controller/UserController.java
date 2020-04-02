@@ -2,6 +2,7 @@ package com.home.water.controller;
 
 
 import com.home.water.entity.User;
+import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("user")
+@CrossOrigin
 public class UserController {
     Logger logger = LoggerFactory.getLogger(getClass());
     /**
@@ -33,9 +35,16 @@ public class UserController {
      * @return 所有数据
      */
     @GetMapping
-    public List<User> selectAll() {
+    public List<UserVO> selectAll() {
         return userService.getAll();
     }
+
+    @GetMapping("/page/{offset}/{limit}")
+    public List<UserVO> queryAllByLimit(@PathVariable int offset,@PathVariable int limit){
+        return userService.queryAllByLimit(offset,limit);
+    }
+
+
 
     /**
      * 通过主键查询单条数据

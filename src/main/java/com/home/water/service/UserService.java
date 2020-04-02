@@ -1,7 +1,10 @@
 package com.home.water.service;
 
+import com.github.pagehelper.Page;
 import com.home.water.entity.User;
+import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,7 +15,11 @@ import java.util.List;
  * @since 2020-03-30 22:41:44
  */
 public interface UserService {
-    List<User> getAll();
+    List<UserVO> getAll();
+
+    List<UserVO> queryAllByLimit(int offset, int limit);
+
+    Page<UserVO> queryByPage(int pageNum,int pageSize);
 
     User getOne(Integer id);
 
