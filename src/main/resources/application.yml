@@ -39,7 +39,11 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
     # druid初始化参数配置end
+  cache:
+    type: ehcache
+
 
 mybatis:
   #xml映射版才需要配置，纯注解版本不需要
   mapper-locations: classpath:mapper/*.xml #指定sql映射文件的位置
+

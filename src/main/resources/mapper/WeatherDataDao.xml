@@ -3,6 +3,7 @@
 <mapper namespace="com.home.water.dao.WeatherDataDao">
 
     <resultMap type="com.home.water.entity.WeatherData" id="WeatherDataMap">
+        <id property="id" column="id"/>
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="weatherYear" column="weather_year" jdbcType="INTEGER"/>
         <result property="avgValue" column="avg_value" jdbcType="INTEGER"/>
