@@ -47,7 +47,7 @@ mybatis:
   #xml映射版才需要配置，纯注解版本不需要
   mapper-locations: classpath:mapper/*.xml #指定sql映射文件的位置
 pagehelper:
-  dialect: mysql
   reasonable: true
   support-methods-arguments: true
   params: count=countsql
+  helper-dialect: mysql

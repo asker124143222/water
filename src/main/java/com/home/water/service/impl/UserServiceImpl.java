@@ -2,6 +2,7 @@ package com.home.water.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.home.water.dao.UserDao;
 import com.home.water.entity.User;
 import com.home.water.model.UserVO;
@@ -41,11 +42,13 @@ public class UserServiceImpl implements UserService {
         return userDao.queryAllByLimit(offset,limit);
     }
 
+    @Cacheable(key = "#root.methodName+'_pageNum_'+#pageNum+'_pageSize_'+#pageSize")
     @Override
-    public Page<UserVO> queryByPage(int pageNum, int pageSize) {
-//        PageHelper.startPage(pageNum,pageSize);
-//        Page<UserVO> pages = (Page<UserVO>)userDao.getAll();
-        return null;
+    public PageInfo<UserVO> queryByPage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<UserVO> lists = userDao.getAll();
+        PageInfo<UserVO> pages = new PageInfo<>(lists);
+        return pages;
     }
 
 

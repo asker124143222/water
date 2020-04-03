@@ -1,6 +1,7 @@
 package com.home.water.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.home.water.entity.User;
 import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
@@ -39,11 +40,21 @@ public class UserController {
         return userService.getAll();
     }
 
-    @GetMapping("/page/{offset}/{limit}")
+    /***
+     *
+     * @param offset 起始位移
+     * @param limit 返回条数
+     * @return
+     */
+    @GetMapping("/limit/{offset}/{limit}")
     public List<UserVO> queryAllByLimit(@PathVariable int offset,@PathVariable int limit){
         return userService.queryAllByLimit(offset,limit);
     }
 
+    @GetMapping("/page/{pageNum}/{pageSize}")
+    public PageInfo<UserVO> queryByPage(@PathVariable int pageNum, @PathVariable int pageSize){
+        return userService.queryByPage(pageNum,pageSize);
+    }
 
 
     /**

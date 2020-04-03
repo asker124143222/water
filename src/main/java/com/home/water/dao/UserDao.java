@@ -31,7 +31,7 @@ public interface UserDao {
             "    ELSE '用户锁定'  END as state,    \n" +
             "    `user`.`tel`,\n" +
             "    `user`.`userName`\n" +
-            "FROM `busdata`.`user` order by userid desc")
+            "FROM `busdata`.`user` order by userid asc")
     List<UserVO> getAll();
 
     /**

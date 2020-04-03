@@ -1,6 +1,7 @@
 package com.home.water.service;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.home.water.entity.User;
 import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
@@ -19,7 +20,7 @@ public interface UserService {
 
     List<UserVO> queryAllByLimit(int offset, int limit);
 
-    Page<UserVO> queryByPage(int pageNum,int pageSize);
+    PageInfo<UserVO> queryByPage(int pageNum, int pageSize);
 
     User getOne(Integer id);
 
