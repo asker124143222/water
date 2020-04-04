@@ -64,7 +64,7 @@ public interface UserDao {
     // 回写主键
     @Options(useGeneratedKeys = true,keyProperty = "userid")
     @Insert("INSERT INTO `user` (`username`,`name`,`password`,`salt`,`state`,createTime) " +
-            "VALUES (#{username}, #{name}, #{password}, #{salt}, 1,sysdate())")
+            "VALUES (#{username}, #{name}, #{password}, #{salt}, #{state},sysdate())")
     int insert(User user);
 
     @Update("update `user` set name=#{name},username=#{username} where userid=#{userid}")

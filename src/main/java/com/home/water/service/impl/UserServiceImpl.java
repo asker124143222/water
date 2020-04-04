@@ -27,6 +27,7 @@ import java.util.List;
 @Service
 @CacheConfig(cacheNames = "userCache")
 public class UserServiceImpl implements UserService {
+    private String salt = "8d78869f470951332959580424d4bf4f";
 
     @Resource
     UserDao userDao;
@@ -64,9 +65,10 @@ public class UserServiceImpl implements UserService {
         return userDao.getOneByNameAndPassword(user);
     }
 
-    @CacheEvict(key = "'all_user'")
+    @CacheEvict(allEntries = true)
     @Override
     public int insert(User user) {
+        user.setSalt(this.salt+user.getUsername());
         return userDao.insert(user);
     }
 
