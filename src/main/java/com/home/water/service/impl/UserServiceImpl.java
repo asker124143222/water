@@ -1,6 +1,5 @@
 package com.home.water.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.home.water.dao.UserDao;
@@ -8,11 +7,9 @@ import com.home.water.entity.User;
 import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
-import net.sf.ehcache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

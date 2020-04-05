@@ -11,7 +11,6 @@ logging:
     # 一旦日志文件大于10MB，这个日志文件就会被加上日期归档，原文清空重新开始记录日志
     max-size: 10MB
     name: /spring_water/logs/app.water.log
-
 spring:
   mvc:
     date-format: yyyy-MM-dd
@@ -41,6 +40,14 @@ spring:
     # druid初始化参数配置end
   cache:
     type: ehcache
+    redis:
+      time-to-live: 300000 #毫秒
+  redis:
+    host: 192.168.31.10
+    port: 6379
+    password: 123456@abc.com
+    timeout: 300 #秒
+    database: 0
 
 
 mybatis:

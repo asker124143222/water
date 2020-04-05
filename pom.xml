@@ -24,6 +24,8 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--访问静态资源(图片、html等)-->
+        <!-- 当然也可以使用thymeleaf后端模板,本项目中没有使用thymeleaf模板，只把这个依赖当做访问静态资源使用 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -85,9 +87,17 @@
             <version>1.2.13</version>
         </dependency>
 
+        <!-- 引入的是ehcache2,ehcache3并不向下兼容-->
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
+            <version>2.10.6</version>
+        </dependency>
+
+        <!-- 引入redis        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>
