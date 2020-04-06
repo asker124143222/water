@@ -6,6 +6,7 @@ import com.home.water.entity.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,6 +47,7 @@ public class HomeController {
     @ResponseBody
     @RequestMapping("/userInfo")
     public Object getConfigInfo() {
+        System.out.println("class:" + applicationContext.getClass() + "," + applicationContext.toString());
         if(customParams.isUserInfo()){
             UserInfo obj = (UserInfo)applicationContext.getBean("userInfo");
             logger.info(obj.toString());
