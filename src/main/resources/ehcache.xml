@@ -38,6 +38,5 @@
            memoryStoreEvictionPolicy="LRU">
         <persistence strategy="localTempSwap"/>
         <cacheEventListenerFactory class="com.home.water.cache.UserCacheEventListenerFactory"/>
-
     </cache>
 </ehcache>

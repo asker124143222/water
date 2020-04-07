@@ -5,6 +5,8 @@ custom:
   redisURL: 192.168.1.31
   redis: true
   userInfo: false
+  # 是否采用注解的方式启动ehcache配置
+  echCacheConfig: false
 
 logging:
   file:
@@ -43,7 +45,7 @@ spring:
     redis:
       time-to-live: 300000 #毫秒
   redis:
-    host: 192.168.31.10
+    host: 192.168.44.10
     port: 6379
     password: 123456@abc.com
     timeout: 300 #秒
