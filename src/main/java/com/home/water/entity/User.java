@@ -1,5 +1,6 @@
 package com.home.water.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @author xu.dm
  * @since 2020-03-30 21:43:25
  */
+@ApiModel(value="user对象",description="用户对象user")
 @Data
 public class User implements Serializable {
     private static final long serialVersionUID = -62465686931818589L;

@@ -6,6 +6,10 @@ import com.home.water.entity.User;
 import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ import java.util.List;
  * @author xu.dm
  * @since 2020-03-30 22:41:44
  */
+@Api(tags={"用户操作接口"})
 @RestController
 @RequestMapping("user")
 @CrossOrigin
@@ -63,6 +68,7 @@ public class UserController {
      * @param id 主键
      * @return 单条数据
      */
+    @ApiOperation(value = "查询用户",notes = "根据id查询单个用户")
     @GetMapping("{id}")
     public User selectOne(@PathVariable Integer id) {
         return userService.getOne(id);
@@ -85,6 +91,8 @@ public class UserController {
      * @param user 实体对象
      * @return 新增结果
      */
+
+    @ApiOperation(value = "新增用户",notes = "新增之后返回对象")
     @PostMapping
     public User insert(@RequestBody User user) {
         if (userService.insert(user) > 0)
@@ -98,6 +106,7 @@ public class UserController {
      * @param user 实体对象
      * @return 修改结果
      */
+    @ApiOperation(value = "修改用户信息",notes = "根据成员id修改单个用户")
     @PutMapping
     public User update(@RequestBody User user) {
         if (userService.update(user) > 0)

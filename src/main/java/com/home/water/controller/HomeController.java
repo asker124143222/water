@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,20 +33,20 @@ public class HomeController {
     @Resource
     private ApplicationContext applicationContext;
 
-    @RequestMapping({"/", "/index"})
+    @GetMapping({"/", "/index"})
     public String index() {
         return "index";
     }
 
     @ResponseBody
-    @RequestMapping("/king")
+    @GetMapping("/king")
     public Object getUserInfo() {
         logger.info(king.toString());
         return king;
     }
 
     @ResponseBody
-    @RequestMapping("/userInfo")
+    @GetMapping("/userInfo")
     public Object getConfigInfo() {
         System.out.println("class:" + applicationContext.getClass() + "," + applicationContext.toString());
         if(customParams.isUserInfo()){
