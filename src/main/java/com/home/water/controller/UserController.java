@@ -3,13 +3,13 @@ package com.home.water.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.home.water.entity.User;
+import com.home.water.common.Result;
+import com.home.water.common.StatusCode;
 import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -94,10 +94,10 @@ public class UserController {
 
     @ApiOperation(value = "新增用户",notes = "新增之后返回对象")
     @PostMapping
-    public User insert(@RequestBody User user) {
+    public Result insert(@RequestBody User user) {
         if (userService.insert(user) > 0)
-            return user;
-        else return null;
+            return new Result(true,StatusCode.OK,"添加成功");
+        else return new Result(false,StatusCode.ERROR,"添加失败");
     }
 
     /**
@@ -108,10 +108,10 @@ public class UserController {
      */
     @ApiOperation(value = "修改用户信息",notes = "根据成员id修改单个用户")
     @PutMapping
-    public User update(@RequestBody User user) {
+    public Result update(@RequestBody User user) {
         if (userService.update(user) > 0)
-            return user;
-        else return null;
+            return new Result(true,StatusCode.OK,"修改成功");
+        else return new Result(false,StatusCode.ERROR,"修改失败");
     }
 
     /**
@@ -121,13 +121,15 @@ public class UserController {
      * @return 删除结果
      */
     @DeleteMapping
-    public int delete(@RequestParam("idList") List<Integer> idList) {
+    public Result<Integer> delete(@RequestParam("idList") List<Integer> idList) {
         logger.info("delete user data："+idList.toString());
         int count = 0;
         for (int i : idList) {
             count += userService.delete(i);
         }
-        return count;
+        if (count > 0)
+            return new Result<>(true,StatusCode.OK,"删除成功",count);
+        else return new Result<>(false,StatusCode.ERROR,"删除失败",0);
     }
 
     @GetMapping("/AllUserWeather")

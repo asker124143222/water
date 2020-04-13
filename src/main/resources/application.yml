@@ -19,8 +19,8 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/busdata
-    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/busdata?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     # druid初始化参数配置start
     initialSize: 5
