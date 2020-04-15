@@ -123,6 +123,9 @@ public class UserController {
     @DeleteMapping
     public Result<Integer> delete(@RequestParam("idList") List<Integer> idList) {
         logger.info("delete user data："+idList.toString());
+        if(idList.contains(1)) {
+            return new Result<>(false,StatusCode.ERROR,"删除失败",0);
+        }
         int count = 0;
         for (int i : idList) {
             count += userService.delete(i);
