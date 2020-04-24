@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class CustomParams {
     private boolean redis;
     private String redisURL;
-    private boolean mq;
+    private boolean activeMQ;
     private boolean userInfo;
-
+    private boolean echCacheConfig;
 }

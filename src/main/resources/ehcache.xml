@@ -29,11 +29,11 @@
        clearOnFlush：内存数量最大时是否清除。
     -->
     <cache name="userCache"
-           maxElementsInMemory="100"
+           maxElementsInMemory="10000"
            eternal="false"
-           timeToIdleSeconds="5400"
-           timeToLiveSeconds="5400"
-           maxElementsOnDisk="100"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="300"
+           maxElementsOnDisk="100000"
            diskExpiryThreadIntervalSeconds="120"
            memoryStoreEvictionPolicy="LRU">
         <persistence strategy="localTempSwap"/>
