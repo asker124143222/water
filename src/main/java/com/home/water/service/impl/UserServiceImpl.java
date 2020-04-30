@@ -62,6 +62,11 @@ public class UserServiceImpl implements UserService {
         return userDao.getOneByNameAndPassword(user);
     }
 
+    @Override
+    public User getUserByName(String username) {
+        return userDao.getUserByName(username);
+    }
+
     @CacheEvict(allEntries = true)
     @Override
     public int insert(User user) {

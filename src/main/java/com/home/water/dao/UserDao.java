@@ -61,6 +61,10 @@ public interface UserDao {
     @Select("select * from user where username=#{username} and password=#{password}")
     User getOneByNameAndPassword(User user);
 
+    @Select("select * from user where username=#{username}")
+    User getUserByName(String username);
+
+
     // 回写主键
     @Options(useGeneratedKeys = true,keyProperty = "userid")
     @Insert("INSERT INTO `user` (`username`,`name`,`password`,`salt`,`state`,createTime) " +

@@ -26,6 +26,8 @@ public interface UserService {
 
     User getOneByNameAndPassword(User user);
 
+    User getUserByName(String username);
+
     int insert(User user);
 
     int update(User user);

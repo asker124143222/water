@@ -14,13 +14,12 @@ logging:
     # 一旦日志文件大于10MB，这个日志文件就会被加上日期归档，原文清空重新开始记录日志
     max-size: 10MB
     name: /logs/app.water.log
+  level: {com.home.water.dao: debug}
 spring:
-  mvc:
-    date-format: yyyy-MM-dd
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/busdata?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/busdata?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     # druid初始化参数配置start
@@ -51,7 +50,11 @@ spring:
     password: 123456@abc.com
     timeout: 300 #秒
     database: 0
-
+  application:
+    name: water-king
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 
 mybatis:
   #xml映射版才需要配置，纯注解版本不需要

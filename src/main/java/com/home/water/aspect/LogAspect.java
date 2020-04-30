@@ -44,7 +44,7 @@ public class LogAspect {
 
     @After("log()")
     public void doAfter(JoinPoint joinPoint) {
-        String msg = LocalDateTime.now().toString() + " 方法执行完成" + ",class：" + joinPoint.getTarget().getClass().getName()
+        String msg =" 方法执行完成" + ",class：" + joinPoint.getTarget().getClass().getName()
                 + ",method: " + joinPoint.getSignature().getName() + ",args: " + Arrays.toString(joinPoint.getArgs());
 
         logger.info(msg);

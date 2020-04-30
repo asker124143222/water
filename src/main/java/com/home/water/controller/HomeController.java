@@ -3,10 +3,13 @@ package com.home.water.controller;
 import com.home.water.bean.King;
 import com.home.water.config.CustomParams;
 import com.home.water.entity.UserInfo;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +24,8 @@ import javax.annotation.Resource;
  * @Description:
  */
 @Controller
+@Log4j2
 public class HomeController {
-    Logger logger = LoggerFactory.getLogger(getClass());
-
     @Resource
     CustomParams customParams;
 
@@ -38,10 +40,11 @@ public class HomeController {
         return "index";
     }
 
+    @PreAuthorize("view_king")
     @ResponseBody
     @GetMapping("/king")
     public Object getUserInfo() {
-        logger.info(king.toString());
+        log.info(king.toString());
         return king;
     }
 
@@ -51,10 +54,22 @@ public class HomeController {
         System.out.println("class:" + applicationContext.getClass() + "," + applicationContext.toString());
         if(customParams.isUserInfo()){
             UserInfo obj = (UserInfo)applicationContext.getBean("userInfo");
-            logger.info(obj.toString());
+            log.info(obj.toString());
             return obj;
 
         }else return customParams;
 
+    }
+
+    @ResponseBody
+    @GetMapping("/auth")
+    public String getAuthenticationInfo(Authentication authentication){
+        log.info("authentication:{}",authentication.toString());
+        log.info("authentication.getName():{}",authentication.getName());
+        log.info("authentication.getCredentials():{}",authentication.getCredentials());
+        log.info("authentication.getAuthorities():{}",(authentication.getAuthorities()));
+        log.info("authentication.getDetails():{}",authentication.getDetails());
+        log.info("authentication.isAuthenticated():{}",authentication.isAuthenticated());
+        return authentication.getName();
     }
 }
