@@ -1,7 +1,9 @@
 package com.home.water.security;
 
+import org.aspectj.weaver.ast.And;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,18 +33,45 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
 
-                .headers().frameOptions().disable()
-                .and()
+//                .headers().frameOptions().disable()
+//                .and()
                 .authorizeRequests()
+                .antMatchers("/login.html","logout.html","/login","/logout").permitAll()
+                // 静态资源等等
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/**/*.ttf",
+                        "/**/*.woff",
+                        "/**/*.map",
+                        "favicon.ico "
+                ).permitAll()
+
                 .antMatchers("/druid").permitAll()
                 .anyRequest()
                 .authenticated()
+
+
                 .and()
-                .formLogin();
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .permitAll()
+
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+//                .logoutSuccessUrl("/login?logout")
+                .permitAll();
+
+
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //是否擦除密码，生产环境应该要设置为true（默认true）
+//        auth.eraseCredentials(false);
         //使用自定义的密码验证器
         auth.authenticationProvider(customUserNamePasswordAuthenticationProvider);
     }

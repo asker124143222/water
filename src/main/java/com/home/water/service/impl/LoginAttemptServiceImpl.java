@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  **/
 @Service
 public class LoginAttemptServiceImpl implements LoginAttemptService {
-    private static final Integer MAX_ATTEMPT=3;
+    private static final Integer MAX_ATTEMPT=10;
     private LoadingCache<String,Integer> attemptCache;
 
     public LoginAttemptServiceImpl() {
