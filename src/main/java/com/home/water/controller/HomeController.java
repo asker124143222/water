@@ -4,19 +4,17 @@ import com.home.water.bean.King;
 import com.home.water.config.CustomParams;
 import com.home.water.entity.UserInfo;
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.security.Principal;
 
 /**
  * @Author: xu.dm
@@ -35,7 +33,19 @@ public class HomeController {
     @Resource
     private ApplicationContext applicationContext;
 
-    @GetMapping({"/", "/index"})
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(){
+        return "logout";
+    }
+
+
+    @GetMapping({"/","/index"})
     public String index() {
         return "index";
     }
@@ -53,6 +63,7 @@ public class HomeController {
         return king;
     }
 
+
     @ResponseBody
     @GetMapping("/userInfo")
     public Object getConfigInfo() {
@@ -69,6 +80,7 @@ public class HomeController {
     @ResponseBody
     @GetMapping("/auth")
     public String getAuthenticationInfo(Authentication authentication){
+        //Authentication 自动注入
         log.info("authentication:{}",authentication.toString());
         log.info("authentication.getName():{}",authentication.getName());
         log.info("authentication.getCredentials():{}",authentication.getCredentials());
@@ -76,5 +88,27 @@ public class HomeController {
         log.info("authentication.getDetails():{}",authentication.getDetails());
         log.info("authentication.isAuthenticated():{}",authentication.isAuthenticated());
         return authentication.getName();
+    }
+
+    @ResponseBody
+    @GetMapping("/auth2")
+    public String getAuthenticationInfo2(){
+        //通过上下文Holder获取认证信息
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("authentication:{}",authentication.toString());
+        log.info("authentication.getName():{}",authentication.getName());
+        log.info("authentication.getCredentials():{}",authentication.getCredentials());
+        log.info("authentication.getAuthorities():{}",(authentication.getAuthorities()));
+        log.info("authentication.getDetails():{}",authentication.getDetails());
+        log.info("authentication.isAuthenticated():{}",authentication.isAuthenticated());
+        return authentication.getName();
+    }
+
+    @ResponseBody
+    @GetMapping("/auth3")
+    public String getAuthenticationInfo3(Principal principal){
+        System.out.println(principal.toString());
+        System.out.println(((UsernamePasswordAuthenticationToken) principal).getDetails());
+        return principal.getName();
     }
 }
