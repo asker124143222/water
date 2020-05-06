@@ -40,6 +40,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/show")
+    public String getUser() {
+        return "userinfo";
+    }
+
     @PreAuthorize("view_king")
     @ResponseBody
     @GetMapping("/king")

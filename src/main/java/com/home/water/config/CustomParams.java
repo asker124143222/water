@@ -18,4 +18,5 @@ public class CustomParams {
     private boolean activeMQ;
     private boolean userInfo;
     private boolean echCacheConfig;
+    private int version=100;
 }

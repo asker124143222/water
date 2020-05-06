@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue/axios.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    axios.get('/userInfo').then(res=>{
+        console.log(res.data)
+        console.log("version ",typeof res.data.version)
+        console.log("redis ",typeof res.data.redis)
+    })
+</script>
+</html>
