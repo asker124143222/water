@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .headers().frameOptions().disable()
 //                .and()
                 .authorizeRequests()
-                .antMatchers("/login.html","logout.html","/login","/logout").permitAll()
+                .antMatchers("/login.html","logout.html","/websocket.html","/login","/logout").permitAll()
                 // 静态资源等等
                 .antMatchers(
                         HttpMethod.GET,
@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.ttf",
                         "/**/*.woff",
                         "/**/*.map",
+                        "/webSocket/**",
                         "favicon.ico "
                 ).permitAll()
 

@@ -44,6 +44,10 @@ public class HomeController {
         return "logout";
     }
 
+    @GetMapping("/websocket")
+    public String websocketTest(){
+        return "websocket";
+    }
 
     @GetMapping({"/","/index"})
     public String index() {

@@ -5,6 +5,9 @@ server:
     key-store-password: 123456
     keyStoreType: PKCS12
     keyAlias: tomcat
+  tomcat:
+    max-threads: 200
+    max-connections: 8192
 custom:
   redisURL: 192.168.1.31
   redis: true

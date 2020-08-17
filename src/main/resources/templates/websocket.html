@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="eui/index.css">
+    <script src="vue/vue.js"></script>
+    <script src="vue/axios.js"></script>
+    <script src="eui/index.js"></script>
+</head>
+<style>
+    .el-table .warning-row {
+        background: oldlace;
+    }
+
+    .el-table .success-row {
+        background: wheat;
+    }
+</style>
+
+<body>
+<div id="app">
+    <!-- 按钮条 -->
+    <div>
+        <el-input v-model="connectionNums" placeholder="连接数"></el-input>
+        <el-button @click="connect()" type="primary" icon="el-icon-edit">websocket连接测试</el-button>
+    </div>
+
+    <div>
+        <el-input v-model="messageText" placeholder="消息"></el-input>
+        <el-button @click="sendMessage()" type="primary" icon="el-icon-edit">发送消息</el-button>
+    </div>
+
+</div>
+</body>
+<script>
+    function guid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    // var webPath = "http://192.168.1.100:8081";
+    var webPath = "";
+    var Main = {
+        data() {
+            return {
+                connectionNums: 1,
+                messageText: null,
+                // 列表
+                tableData: [],
+                websock: [],
+
+                // 表单
+                form: {
+                    userid: '',
+                    username: '',
+                    name: '',
+                    password: '',
+                    email: '',
+                    tel: '',
+                    createtime: '',
+                    expiredDate: '',
+                    state: '0'
+                },
+                modify: false,
+                dialogFormVisible: false
+
+            }
+        },
+        created() {
+            // this.getData();
+        },
+        methods: {
+            connect() {
+                for (let i=0;i<this.connectionNums;i++){
+                    this.initWebSocket(i)
+                }
+            },
+            sendMessage() {
+                this.websock[0].send(this.messageText)
+            },
+            initWebSocket(code) {
+                const wsUri = 'wss://localhost:8081/webSocket/' + guid();
+                this.websock[code] = new WebSocket(wsUri);
+                this.websock[code].onopen = this.webSocketOnOpen;
+                this.websock[code].onerror = this.webSocketOnError;
+                this.websock[code].onmessage = this.webSocketOnMessage
+            },
+            webSocketOnOpen(e) {
+                console.log('websocket 已经连接',e)
+            },
+            webSocketOnError(e) {
+                this.$notify({
+                    title: 'WebSocket连接发生错误',
+                    type: 'error',
+                    duration: 0
+                })
+            },
+            webSocketOnMessage(e) {
+                console.log("目标：",e.currentTarget.url+"，收到内容："+e.data)
+                // const data = e.data
+                // this.$notify({
+                //     title: '',
+                //     message: data,
+                //     type: 'success',
+                //     dangerouslyUseHTMLString: true,
+                //     duration: 5500
+                // })
+            }
+        }
+    };
+    var Ctor = Vue.extend(Main);
+    new Ctor().$mount('#app')
+</script>
+
+</html>
