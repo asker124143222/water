@@ -30,12 +30,12 @@ public class TestTask extends QuartzJobBean {
         UUID uuid = UUID.randomUUID();
         log.info("task start ... Id: "+uuid.toString());
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 //        List<UserVO> list = userService.getAll();
 //        log.info(list.toString());
-//        log.info("task end ... Id: "+uuid.toString());
+        log.info("task end  ...  Id: "+uuid.toString());
     }
 }

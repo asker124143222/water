@@ -25,7 +25,7 @@ public class QuartzApplicationTests {
                 .withIdentity("TestTask")
                 .storeDurably()
                 .build();
-        CronScheduleBuilder cronSchedule = CronScheduleBuilder.cronSchedule("0/2 * * * * ? *");
+        CronScheduleBuilder cronSchedule = CronScheduleBuilder.cronSchedule("0/5 * * * * ? *");
         CronTrigger testTaskTrigger = TriggerBuilder.newTrigger()
                 .forJob(testTask)
                 .withIdentity("TestTaskTrigger")
@@ -34,18 +34,48 @@ public class QuartzApplicationTests {
         scheduler.scheduleJob(testTask, testTaskTrigger);
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(20000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println("reset cron...");
+        scheduler.deleteJob(JobKey.jobKey("TestTask"));
 
-        TriggerKey triggerKey = TriggerKey.triggerKey("TestTaskTrigger");
-        CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-        String cronString = "0/10 * * * * ? *";
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronString);
-        trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
-        scheduler.rescheduleJob(triggerKey, trigger);
+        testTask = JobBuilder.newJob(TestTask.class)
+                .withIdentity("TestTask")
+                .storeDurably()
+                .build();
+        cronSchedule = CronScheduleBuilder.cronSchedule("0/10 * * * * ? *");
+        testTaskTrigger = TriggerBuilder.newTrigger()
+                .forJob(testTask)
+                .withIdentity("TestTaskTrigger")
+                .withSchedule(cronSchedule)
+                .build();
+        scheduler.scheduleJob(testTask, testTaskTrigger);
+
+//        TriggerKey triggerKey = TriggerKey.triggerKey("TestTaskTrigger");
+//        CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+//        String cronString = "0/10 * * * * ? *";
+//        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronString);
+//        trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
+//        scheduler.rescheduleJob(triggerKey, trigger);
+
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("pause task ... ");
+        scheduler.pauseJob(JobKey.jobKey("TestTask"));
+
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("resume task ... ");
+        scheduler.resumeJob(JobKey.jobKey("TestTask"));
 
         try {
             Thread.sleep(100000);
