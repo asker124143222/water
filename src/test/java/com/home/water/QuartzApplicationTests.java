@@ -39,7 +39,12 @@ public class QuartzApplicationTests {
             e.printStackTrace();
         }
         System.out.println("reset cron...");
+        // 停止job ... start
+        TriggerKey triggerKey = TriggerKey.triggerKey("TestTaskTrigger");
+        scheduler.pauseTrigger(triggerKey);
+        scheduler.unscheduleJob(triggerKey);
         scheduler.deleteJob(JobKey.jobKey("TestTask"));
+        // 停止job ... end
 
         testTask = JobBuilder.newJob(TestTask.class)
                 .withIdentity("TestTask")
