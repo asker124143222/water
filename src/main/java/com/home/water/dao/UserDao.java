@@ -17,7 +17,6 @@ import java.util.List;
  * @author xu.dm
  * @since 2020-03-30 22:41:44
  */
-@Repository
 //@Mapper
 public interface UserDao {
     @Select("SELECT `user`.`userId`,\n" +

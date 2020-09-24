@@ -2,7 +2,10 @@ package com.home.water;
 
 import com.home.water.bean.King;
 
+import com.home.water.common.EntityStatus;
 import com.home.water.config.CustomParams;
+import com.home.water.dao.DeptDao;
+import com.home.water.entity.Dept;
 import com.home.water.entity.UserInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +17,9 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class WaterApplicationTests {
     @Autowired
     King king;
@@ -28,6 +32,9 @@ class WaterApplicationTests {
 
     @Resource
     ApplicationContext applicationContext;
+
+    @Resource
+    DeptDao deptDao;
 
     @Test
     void contextLoads() throws SQLException {
@@ -52,6 +59,12 @@ class WaterApplicationTests {
             System.out.println(beanName);
         }
 
+    }
+
+    @Test
+    void testEnum(){
+        List<Dept> depts = deptDao.queryAll(null);
+        System.out.println(depts);
     }
 }
 

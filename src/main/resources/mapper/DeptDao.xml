@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.home.water.dao.DeptDao">
+
+    <resultMap type="com.home.water.entity.Dept" id="DeptMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+        <result property="pid" column="pid" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="DeptMap">
+        select id,
+               dept_name,
+               pid,
+               state,
+               create_time,
+               update_time
+        from busdata.dept
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="DeptMap">
+        select id,
+               dept_name,
+               pid,
+               state,
+               create_time,
+               update_time
+        from busdata.dept
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="DeptMap">
+        select
+        id, dept_name, pid, state, create_time, update_time
+        from busdata.dept
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="deptName != null and deptName != ''">
+                and dept_name = #{deptName}
+            </if>
+            <if test="pid != null and pid != ''">
+                and pid = #{pid}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into busdata.dept(dept_name, pid, state, create_time, update_time)
+        values (#{deptName}, #{pid}, #{state}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update busdata.dept
+        <set>
+            <if test="deptName != null and deptName != ''">
+                dept_name = #{deptName},
+            </if>
+            <if test="pid != null and pid != ''">
+                pid = #{pid},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from busdata.dept
+        where id = #{id}
+    </delete>
+
+</mapper>
