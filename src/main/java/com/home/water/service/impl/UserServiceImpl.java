@@ -2,8 +2,10 @@ package com.home.water.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.home.water.config.CustomParams;
 import com.home.water.dao.UserDao;
 import com.home.water.entity.User;
+import com.home.water.entity.UserInfo;
 import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
@@ -29,6 +31,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     UserDao userDao;
 
+    @Resource
+    CustomParams customParams;
+
     @Cacheable(key = "'all_user'")
     @Override
     public List<UserVO> getAll() {
@@ -40,9 +45,12 @@ public class UserServiceImpl implements UserService {
         return userDao.queryAllByLimit(offset,limit);
     }
 
-    @Cacheable(key = "#root.methodName+'_pageNum_'+#pageNum+'_pageSize_'+#pageSize")
+//    @Cacheable(key = "#root.methodName+'_pageNum_'+#pageNum+'_pageSize_'+#pageSize")
     @Override
     public PageInfo<UserVO> queryByPage(int pageNum, int pageSize) {
+        UserInfo userInfo = customParams.getCustomUserInfo();
+        System.out.println("UserServiceImpl输出："+userInfo);
+//        System.out.println("controller输出sessionId："+customParams.getSessionId());
         PageHelper.startPage(pageNum,pageSize);
         List<UserVO> lists = userDao.getAll();
         PageInfo<UserVO> pages = new PageInfo<>(lists);
