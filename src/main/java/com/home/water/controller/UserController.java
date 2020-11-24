@@ -2,9 +2,11 @@ package com.home.water.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.home.water.config.CustomParams;
 import com.home.water.entity.User;
 import com.home.water.common.Result;
 import com.home.water.common.StatusCode;
+import com.home.water.entity.UserInfo;
 import com.home.water.model.UserVO;
 import com.home.water.model.UserWeather;
 import com.home.water.service.UserService;
@@ -15,7 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * (User)表控制层
@@ -34,6 +38,13 @@ public class UserController {
      */
     @Resource
     private UserService userService;
+
+    @Resource
+    private CustomParams customParams;
+
+    // 单例，线程间共享
+    private boolean init = false;
+
 
     /**
      * 分页查询所有数据
@@ -57,7 +68,19 @@ public class UserController {
     }
 
     @GetMapping("/page/{pageNum}/{pageSize}")
-    public PageInfo<UserVO> queryByPage(@PathVariable int pageNum, @PathVariable int pageSize){
+    public PageInfo<UserVO> queryByPage(HttpServletRequest request,@PathVariable int pageNum, @PathVariable int pageSize){
+        if(pageNum==1){
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUserName(request.getRequestedSessionId());
+            userInfo.setUserId((int) Math.round(Math.random()*100));
+            System.out.println("controller输出："+userInfo);
+            customParams.setCustomUserInfo(userInfo);
+        }
+//        if(!init){
+//            customParams.setSessionId(request.getRequestedSessionId());
+//            init = true;
+//        }
+//        System.out.println("controller输出sessionId："+customParams.getSessionId());
         return userService.queryByPage(pageNum,pageSize);
     }
 
