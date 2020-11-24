@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
                 .authorizeRequests()
                 .antMatchers("/login.html","logout.html","/websocket.html","/login","/logout").permitAll()
+                .antMatchers("/ureport/**").permitAll()
                 // 静态资源等等
                 .antMatchers(
                         HttpMethod.GET,
