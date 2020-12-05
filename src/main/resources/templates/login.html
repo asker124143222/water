@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>请登录</title>
-<!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"-->
-<!--          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">-->
-<!--    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet"-->
-<!--          crossorigin="anonymous"/>-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet"
+          crossorigin="anonymous"/>
     <script src="vue/vue.js"></script>
     <script src="vue/axios.js"></script>
 </head>
@@ -28,7 +28,10 @@
             <input type="password" v-model="form.password" id="password" name="password" class="form-control"
                    placeholder="密码" required>
         </p>
-        <button class="btn btn-lg btn-primary btn-block" type="button" @click="login()">登 陆</button>
+        <button class="btn btn-lg btn-primary btn-block" type="button" @click="login()">登 录</button>
+        <button class="btn btn-lg btn-info btn-block" type="button" @click="pmoLogin()">第三方登录</button>
+        <a href="http://localhost/oauth/authorize?response_type=code&client_id=wood_web" class="btn btn-lg btn-info btn-block">测试登录</a>
+        <button class="btn btn-lg btn-info btn-block" type="button" @click="auth3()">第三个测试</button>
     </form>
 </div>
 </body>
@@ -36,6 +39,7 @@
     var app = new Vue({
         el: '#app',
         data: {
+            client_id: 'wood_web',
             form: {
                 username: 'water',
                 password: '123456'
@@ -49,10 +53,42 @@
                 params.append('username', this.form.username);
                 params.append('password', this.form.password);
                 axios.post("/login", params).then(res => {
+                    console.log(res)
                     document.write(res.data);
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            pmoLogin: function () {
+              axios({
+                  method: 'get',
+                  url: '/oAuth/login',
+                  headers: {
+                      // "Access-Control-Allow-Origin": "*",
+                      // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, client_id, uuid, Authorization",
+                      // "Access-Control-Allow-Methods": "POST, PUT, GET, OPTIONS, DELETE"
+                  }
+              }).catch(error => {
+                      console.log(error)
+              })
+            },
+            auth2: function () {
+                const client_id = 'wood_web';
+                const basicAuth = 'Basic d29vZF93ZWI6MTIzNDU2';
+                const url = 'http://localhost:9000/oauth/authorize?response_type=code&client_id='+client_id;
+                axios({
+                    method: 'get',
+                    url: url,
+                    headers: {
+                        Authorization: basicAuth
+                    }
+                }).then(res => {
+                    console.log(res);
+                })
+            },
+            auth3: function () {
+                const url = "http://localhost/oauth/authorize?response_type=code&client_id=wood_web";
+                window.open(url,"_self")
             }
         }
     });

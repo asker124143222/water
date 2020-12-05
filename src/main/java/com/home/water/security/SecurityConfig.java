@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
 
@@ -24,6 +26,9 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Resource
+    private CorsFilter corsFilter;
 
     @Resource
     private CustomUserNamePasswordAuthenticationProvider customUserNamePasswordAuthenticationProvider;
@@ -40,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 静态资源等等
                 .antMatchers(
                         HttpMethod.GET,
+                        "/static/**",
                         "/**/*.css",
                         "/**/*.js",
                         "/**/*.ttf",
@@ -48,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webSocket/**",
                         "favicon.ico "
                 ).permitAll()
-
+                .antMatchers("/oAuth/login").permitAll()
                 .antMatchers("/druid").permitAll()
                 .anyRequest()
                 .authenticated()
@@ -66,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logoutSuccessUrl("/login?logout")
                 .permitAll();
 
-
+        http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

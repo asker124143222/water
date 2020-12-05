@@ -21,7 +21,7 @@ public class CustomParams {
     private boolean activeMQ;
     private boolean userInfo;
     private boolean echCacheConfig;
-    private int version=100;
+    private String version="100";
 
     public UserInfo getCustomUserInfo(){
         UserInfo userInfo = CUSTOM_THREAD_LOCAL.get();
