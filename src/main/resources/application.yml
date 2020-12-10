@@ -1,10 +1,10 @@
 server:
   port: 8081
-#  ssl:
-#    key-store: keystore.p12
-#    key-store-password: 123456
-#    keyStoreType: PKCS12
-#    keyAlias: tomcat
+  ssl:
+    key-store: keystore.p12
+    key-store-password: 123456
+    keyStoreType: PKCS12
+    keyAlias: tomcat
   tomcat:
     max-threads: 200
     max-connections: 8192
